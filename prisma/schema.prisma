@@ -1,0 +1,218 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  name      String?
+  email     String   @unique
+  password  String
+  image     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  height      Float? // in cm
+  weight      Float? // in kg (current)
+  age         Int?
+  gender      String?
+  fitnessGoal String?
+
+  workouts        Workout[]
+  bodyWeightLogs  BodyWeightLog[]
+  recoveryLogs    DailyRecovery[]
+
+  // CogniType relations
+  typingSessions  TypingSession[]
+  cogniBaselines  UserBaseline[]
+}
+
+model Workout {
+  id        String   @id @default(cuid())
+  name      String
+  date      DateTime @default(now())
+  duration  Int?     // in minutes
+  notes     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  exercises WorkoutExercise[]
+}
+
+model Exercise {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  muscleGroup String
+  equipment   String?
+  
+  workoutExercises WorkoutExercise[]
+}
+
+model WorkoutExercise {
+  id        String   @id @default(cuid())
+  order     Int      @default(0)
+  notes     String?
+
+  workoutId String
+  workout   Workout  @relation(fields: [workoutId], references: [id], onDelete: Cascade)
+
+  exerciseId String
+  exercise   Exercise @relation(fields: [exerciseId], references: [id])
+
+  sets Set[]
+
+  @@index([workoutId])
+  @@index([exerciseId])
+}
+
+model Set {
+  id        String   @id @default(cuid())
+  order     Int      @default(0)
+  reps      Int
+  weight    Float    // in kg
+  restTime  Int?     // in seconds
+  completed Boolean  @default(false)
+
+  // Hypertrophy enhancement fields
+  variationType       String?  // "Standard", "Diamond", "Weighted", "Slow-Tempo"
+  tempo                String?  // "3-1-3" (eccentric-pause-concentric)
+  addedWeight          Float?   // For weighted calisthenics (vest/backpack kg)
+  perceivedDifficulty  Int?     // RPE scale 1-10
+
+  workoutExerciseId String
+  workoutExercise   WorkoutExercise @relation(fields: [workoutExerciseId], references: [id], onDelete: Cascade)
+
+  @@index([workoutExerciseId])
+}
+
+model BodyWeightLog {
+  id        String   @id @default(cuid())
+  date      DateTime @default(now())
+  weight    Float
+  notes     String?
+  
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model DailyRecovery {
+  id            String   @id @default(cuid())
+  userId        String
+  date          DateTime @default(now())
+  sleepHours    Float?
+  sleepQuality  String?  // "Poor", "Fair", "Good", "Excellent"
+  gutStatus     String?  // "Good", "Bloated", "Uncomfortable"
+  stressLevel   Int?     // 1-10
+  notes         String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, date])
+  @@index([userId, date])
+}
+
+// ─── CogniType: Cognitive Performance Typing Module ───
+
+model TextPassage {
+  id         String   @id @default(cuid())
+  title      String
+  content    String
+  difficulty Int      // 1=Simple, 2=Moderate, 3=Complex
+  wordCount  Int
+  category   String?  // "prose", "technical", "numeric"
+
+  sessions   TypingSession[]
+}
+
+model TypingSession {
+  id            String    @id @default(cuid())
+  userId        String
+  passageId     String
+  startedAt     DateTime  @default(now())
+  completedAt   DateTime?
+  soundType     String?   // "brown_noise", "pink_noise", "ambient", "rhythmic", "silence"
+  timeOfDay     String    // "morning", "afternoon", "evening", "night"
+  durationMs    Int?
+  completed     Boolean   @default(false)
+
+  keystrokeEvents KeystrokeEvent[]
+  attentionEvents AttentionEvent[]
+  metrics         SessionMetrics?
+
+  user    User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  passage TextPassage @relation(fields: [passageId], references: [id])
+
+  @@index([userId])
+  @@index([passageId])
+}
+
+model KeystrokeEvent {
+  id            String  @id @default(cuid())
+  sessionId     String
+  timestamp     Float   // ms since session start
+  key           String
+  isCorrect     Boolean
+  isCorrection  Boolean // backspace/delete
+  position      Int     // character position in passage
+
+  session TypingSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+
+  @@index([sessionId])
+}
+
+model AttentionEvent {
+  id        String  @id @default(cuid())
+  sessionId String
+  type      String  // "blur", "focus", "visibility_hidden", "visibility_visible", "idle"
+  timestamp Float   // ms since session start
+  duration  Float?  // ms of event duration
+
+  session TypingSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+
+  @@index([sessionId])
+}
+
+model SessionMetrics {
+  id                    String @id @default(cuid())
+  sessionId             String @unique
+  meanInterKeyLatency   Float
+  latencyStdDev         Float
+  pauseEntropy          Float
+  errorRate             Float
+  correctionLatency     Float
+  switchCount           Int
+  switchTimeRatio       Float
+  resumeLatency         Float
+  fatigueSlope          Float
+  focusStabilityScore   Float  // 0-100
+  soundType             String?
+  difficultyLevel       Int
+  sessionTimeOfDay      String
+
+  session TypingSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+}
+
+model UserBaseline {
+  id            String   @id @default(cuid())
+  userId        String
+  metric        String   // e.g. "meanInterKeyLatency"
+  baselineValue Float
+  stdDev        Float
+  sampleCount   Int
+  updatedAt     DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, metric])
+  @@index([userId])
+}
+
