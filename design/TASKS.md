@@ -37,7 +37,7 @@ Prototype paths are relative to `design/prototype/src/`. Real routes are in PORT
   the checkpoint.
 
 ## Group 3: Charts (files: charts.tsx)
-- [ ] 3.1 Port to `src/components/charts/`: line-chart, bar-chart, donut, calendar-heatmap,
+- [x] 3.1 Port to `src/components/charts/`: line-chart, bar-chart, donut, calendar-heatmap,
       grid-heatmap, scatter, sparkline. Keep `summary` text, focus+hover tooltips, animations.
 
 ## Group 4: Shell (files: chrome.tsx)
