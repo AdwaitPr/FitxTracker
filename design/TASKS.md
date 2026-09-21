@@ -3,15 +3,15 @@ Execute with `/next-task`. Tick boxes as you finish. Stop after each group (`/ch
 Prototype paths are relative to `design/prototype/src/`. Real routes are in PORT-AUDIT.md section 3.
 
 ## Group 0: Baseline (before any UI change)
-- [ ] 0.1 Confirm `.env.local` has DATABASE_URL, NEXTAUTH_URL, NEXTAUTH_SECRET (do NOT print values).
+- [x] 0.1 Confirm `.env.local` has DATABASE_URL, NEXTAUTH_URL, NEXTAUTH_SECRET (do NOT print values).
       If missing, STOP and ask the human.
-- [ ] 0.2 Add `"design"` to `exclude` in tsconfig.json and `"design/**"` to globalIgnores in
+- [x] 0.2 Add `"design"` to `exclude` in tsconfig.json and `"design/**"` to globalIgnores in
       eslint.config.mjs. Verify `npm run build` ignores the design folder.
-- [ ] 0.3 `npm install`, `npx prisma generate`, `npm run lint`, `npx tsc --noEmit`, `npm run build`.
+- [x] 0.3 `npm install`, `npx prisma generate`, `npm run lint`, `npx tsc --noEmit`, `npm run build`.
       Record baseline results in `design/verification/0/baseline.md`. If the app cannot start
       because the DB is unreachable or migrations do not match the postgres provider, STOP and
       report (the human handles the database baseline; do not touch migrations).
-- [ ] 0.4 Screenshot every existing route (logged in) as the "before" set.
+- [x] 0.4 Screenshot every existing route (logged in) as the "before" set.
 
 ## Group 1: Tokens (files: index.css)
 - [ ] 1.1 Rewrite `src/app/globals.css`: light + dark tokens from the prototype `index.css`
