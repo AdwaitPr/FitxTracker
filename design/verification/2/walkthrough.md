@@ -80,3 +80,75 @@ This walkthrough summarizes the implementation, empirical testing, and visual ve
 7. **Regression Screen Captures**:
    - Captured dark mode screenshots across `/login`, `/register`, `/dashboard`, `/workouts/new`, `/recovery`, `/profile`, `/cognitype`, `/workouts/history`, and `/progress`.
    - Detailed visible differences recorded in `design/verification/2/notes.md`.
+
+---
+
+## 3. Group 2b Additions (Overlays, Controls & Brand SVGs)
+
+### 3.1 Overlays & Floating Components (`createPortal`)
+- **`Modal` (`src/components/ui/modal.tsx`)** (Client Component):
+  - Portaled directly to `document.body`.
+  - Nested scroll lock counter preventing body jitter across multiple open modals.
+  - Accessible focus trap with initial focus into the first interactive element.
+  - Global `Escape` key listener with focus return to the trigger element.
+  - Uses `--overlay` token and safe-area inset mobile bottom sheet styles.
+- **`Menu` (`src/components/ui/menu.tsx`)** (Client Component):
+  - Portaled directly to `document.body`, avoiding clipping by parent container overflow.
+  - Position calculated via `getBoundingClientRect()` from trigger; flips upward when space below is tight.
+  - Closes on pointerdown outside, resize, or scroll.
+  - First enabled item focused on open; ArrowUp/Down/Home/End keyboard navigation.
+  - Supports both `onClick` and `href` (renders Next.js `<Link role="menuitem">`).
+- **`Popover` (`src/components/ui/popover.tsx`)** (Client Component):
+  - Portaled to `document.body` with dynamic alignment and edge flipping.
+  - Server-friendly default trigger button (`triggerLabel`, `triggerIcon`, `triggerClassName`), preventing serialization errors when called from Server Components.
+  - Escape key and pointerdown outside listeners.
+- **`Toast` (`src/components/ui/toast.tsx`)** (Client Component):
+  - `ToastProvider` and `useToast` hook for application-wide notifications.
+  - Polite announcements (`role="status"`, `aria-live="polite"`) for success, assertive (`role="alert"`, `aria-live="assertive"`) for danger.
+  - Portaled notification container with countdown pause on hover or focus.
+
+### 3.2 Form Controls
+- **`Select` (`src/components/ui/select.tsx`)** (Server Component):
+  - Full-pill shape with `appearance-none` and `[background-image:none] !bg-none` resetting legacy `globals.css` chevron.
+  - Single Lucide `ChevronDown` placed at `right-4`.
+- **`Textarea` (`src/components/ui/textarea.tsx`)** (Server Component):
+  - Rounded container (`rounded-[20px]`) with `border-hairline`, `bg-surface`, and `placeholder:text-ink-muted`.
+- **`Slider` (`src/components/ui/controls.tsx`)** (Client Component):
+  - Accessible range input with required `label`, `aria-valuetext`, min/max/step, and dynamic `--pct` CSS custom property.
+  - 44px minimum touch target height.
+- **`Stepper` (`src/components/ui/controls.tsx`)** (Client Component):
+  - Precise arithmetic avoiding floating-point drift (e.g. 7.300000000000001).
+  - Clear `aria-label` on decrement/increment buttons and `aria-live="polite"` on value display.
+- **`Chip` (`src/components/ui/controls.tsx`)** (Client Component):
+  - Pill button with `aria-pressed`, optional status tone or icon, and 44px mobile height compliance (`min-h-10 max-md:min-h-11`).
+- **`Disclosure` (`src/components/ui/controls.tsx`)** (Client Component):
+  - Accordion header with rotating `ChevronDown`.
+  - Keeps content mounted in DOM using `hidden={!open}` and `!open && "hidden"`, preserving internal input values across collapse/expand cycles.
+- **`Toggle`**:
+  - Omitted per DECISIONS.md item 8 and user instruction.
+
+### 3.3 Brand SVGs & Feedback
+- **`Logo` (`src/components/ui/logo.tsx`)** (Server Component):
+  - 4-point sparkle brand mark with `Fitx` and `Tracker` display typography.
+  - Standard and compact variants.
+- **`MuscleGlyph` (`src/components/ui/muscle-glyph.tsx`)** (Server Component):
+  - 7 anatomical muscle glyphs (`Chest`, `Back`, `Legs`, `Shoulders`, `Arms`, `Core`, `Cardio`).
+  - Default `aria-hidden={true}` with configurable `size` and `currentColor` stroke.
+- **`Skeleton` (`src/components/ui/skeleton.tsx`)** (Server Component):
+  - Accessible pulse loader (`aria-hidden="true"`) with `rounded-[12px] bg-hairline`.
+- **`EmptyState` (`src/components/ui/empty-state.tsx`)** (Server Component):
+  - Dashed container with centered icon badge, title, descriptive body, and action button slot.
+
+### 3.4 Verification Summary
+- Automated CDP test suite verified all interactions:
+  - Single chevron appearance on Select
+  - 0.5kg precision stepping without floating point drift
+  - Disclosure state retention
+  - Modal focus trapping, scroll lock, and Escape close
+  - Menu portaling, auto-focus, ArrowDown navigation, and Escape close
+  - Popover portaling and Escape close
+  - Toast polite announcements
+- Screenshots captured at 1280x800 and 360x800 in light and dark mode.
+- Temporary `/dev/ui` showcase route removed prior to checkpoint.
+- `npx tsc --noEmit` passed with 0 errors; `npm run lint` matched baseline exactly.
+

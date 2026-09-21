@@ -30,9 +30,9 @@ Prototype paths are relative to `design/prototype/src/`. Real routes are in PORT
 - [x] 2.1 Refactor Card, Button, Input (same props as today + new variants). Remove JS hover
       handlers in favour of hover: classes.
 - [x] 2.2 Add: Tag, IconButton, Segmented, ProgressBar, RingProgress, SectionHeader, StatChip.
-- [ ] 2.3 Add: Popover, Menu, Modal (Esc, focus trap, scroll lock), Skeleton, Toast, EmptyState.
-- [ ] 2.4 Add controls: Slider, Stepper, Toggle, Chip, Disclosure, Select, Textarea.
-- [ ] 2.5 Custom SVGs: `Logo`, `MuscleGlyph`. All other icons via lucide-react.
+- [x] 2.3 Add: Popover, Menu, Modal (Esc, focus trap, scroll lock), Skeleton, Toast, EmptyState.
+- [x] 2.4 Add controls: Slider, Stepper, Chip, Disclosure, Select, Textarea (Toggle skipped per DECISIONS.md #8).
+- [x] 2.5 Custom SVGs: `Logo`, `MuscleGlyph`. All other icons via lucide-react.
 - Verify: temporary `/dev/ui` showcase route is allowed during this group ONLY; delete it before
   the checkpoint.
 

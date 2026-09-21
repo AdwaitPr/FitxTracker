@@ -103,3 +103,50 @@ Refactoring `Card`, `Button`, and `Input` to prototype tokens introduced the fol
    - **Shape & Dimensions**: Converted from rectangular `rounded-12px` inputs to refined pill-shaped `rounded-full` inputs with fixed `h-11` (44px) height.
    - **Colors & Focus**: Text uses `text-ink`, placeholders use `text-ink-muted` (instead of legacy dark gray). Focus styles use `focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary` and `border-primary/50`. Error states use `border-danger` with dedicated alert icons and `role="alert"`.
    - **Affected Pages**: `/login`, `/register`, `/workouts/new`, `/recovery`, `/profile`.
+
+---
+
+## 5. Group 2b Verification Notes (Overlays, Controls & Brand SVGs)
+
+### 5.1 Architecture, Portaling & Server/Client Boundaries
+
+1. **Portaling Architecture**:
+   - `Modal`, `Menu`, `Popover`, and `ToastContainer` mount via `createPortal(..., document.body)`.
+   - This guarantees that floating surfaces are never clipped by parent container overflow (`overflow: hidden` / `overflow: auto`), and avoids coordinate distortion from transformed ancestors (`.rise` / `.lift` transforms create local stacking and containing blocks).
+   - Dynamic positioning for `Menu` and `Popover` is computed from `trigger.getBoundingClientRect()`, flipping above if space below is insufficient, and adjusting continuously on scroll and resize events.
+
+2. **Server / Client Boundaries**:
+   - **Server Components** (No `"use client"`): `Skeleton`, `EmptyState`, `Logo`, `MuscleGlyph`, `Select`, `Textarea`.
+   - **Client Components** (`"use client"`): `Modal`, `Menu`, `Popover`, `Toast`, `controls.tsx` (`Slider`, `Stepper`, `Chip`, `Disclosure`).
+   - **Server Props Contract**: `Popover` renders its own trigger button by default (`triggerLabel`, `triggerIcon`, `triggerClassName`), preventing serialization failures when called from Server Components. Render prop `trigger` is supported as an optional client-only override.
+   - **Navigation in Menus**: `MenuItem` supports `href?: string` which renders Next.js `<Link role="menuitem">` with proper focus styles and client-side prefetching.
+
+3. **Omission of `Toggle` Control**:
+   - As established in `design/DECISIONS.md` (item 8) and confirmed by user instruction, profile/settings toggle switches have been eliminated from the redesign. In accordance with the guardrail against shipping unneeded prototype code, `Toggle` was omitted from `controls.tsx`.
+
+### 5.2 Empirical Chrome DevTools Protocol Verification
+
+All interactions and accessibility flows were verified via CDP headless testing against `http://localhost:3000/dev/ui`:
+
+| Test Suite | Mechanism / Action | Expected Result | Measured Output | Status |
+| :--- | :--- | :--- | :--- | :--- |
+| **Select Single Chevron** | CSS Reset check | `background-image: none`, single Lucide chevron | `bgImage: 'none'`, `appearance: 'none'`, `pr: '36px'` | **PASS** |
+| **Stepper Precision** | Decimal arithmetic | Exact 0.5 step increments, no FP drift | `12.5 kg` $\to$ `13.0 kg` $\to$ `12.5 kg` | **PASS** |
+| **Disclosure Form State** | Accordion toggle | Form state preserved across collapse | `inputStillInDom: true`, `inputPreservedVal: "Preserved input"` | **PASS** |
+| **Modal Body Scroll Lock** | Open dialog | Body scroll locked via counter | `bodyOverflow: "hidden"`, `activeModalCount: 1` | **PASS** |
+| **Modal Focus Management** | Open dialog | Initial focus directed inside modal | `activeTag: "BUTTON"` inside dialog | **PASS** |
+| **Modal Escape & Restore** | Key `Escape` | Modal unmounts, body lock released, focus returned | `hasDialog: false`, `bodyOverflow: ""`, `activeId: "open-modal-btn"` | **PASS** |
+| **Menu Portaling** | Open dropdown | Dropdown rendered as direct child of `body` | `isDirectChildOfBody: true`, `hasMenu: true` | **PASS** |
+| **Menu Arrow Navigation** | Key `ArrowDown` | Focus moves from item 1 to item 2 | `activeText: "Edit Session"` $\to$ `activeText: "View Analytics"` | **PASS** |
+| **Menu Escape & Return** | Key `Escape` | Menu closes, focus returns to trigger | `hasMenu: false`, `activeAriaLabel: "Workout Actions"` | **PASS** |
+| **Popover Portaling** | Open popover | Popover rendered as direct child of `body` | `isDirectChildOfBody: true`, `hasPopover: true` | **PASS** |
+| **Popover Escape** | Key `Escape` | Popover closes, focus returns to trigger | `hasPopover: false`, `activeAriaLabel: "Help Details"` | **PASS** |
+| **Toast Polite Announce** | Trigger toast | Toast mounts with `aria-live="polite"` | `role="status"`, `ariaLive: "polite"`, message text confirmed | **PASS** |
+
+### 5.3 Captured Verification Artifacts
+
+The following screenshots were captured and verified for typography, color contrast, and layout across desktop and mobile viewports:
+- `design/verification/2/dev-ui-2b-dark-1280.png` (Dark Mode, 1280x800)
+- `design/verification/2/dev-ui-2b-dark-360.png` (Dark Mode, 360x800)
+- `design/verification/2/dev-ui-2b-light-1280.png` (Light Mode, 1280x800)
+- `design/verification/2/dev-ui-2b-light-360.png` (Light Mode, 360x800)

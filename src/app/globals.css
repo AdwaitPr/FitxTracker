@@ -49,6 +49,7 @@
   --fx-shadow-soft: 0 8px 30px rgba(20, 20, 60, 0.06);
   --fx-shadow-lift: 0 14px 38px rgba(20, 20, 60, 0.1);
   --fx-shadow-window: 0 40px 90px rgba(20, 24, 45, 0.28);
+  --overlay: rgba(15, 15, 20, 0.45);
 
   /* Type */
   --fx-font-display: var(--font-plus-jakarta), "Manrope", Inter, ui-sans-serif, system-ui,
@@ -140,6 +141,7 @@
   --fx-shadow-soft: 0 8px 30px rgba(0, 0, 0, 0.35);
   --fx-shadow-lift: 0 14px 38px rgba(0, 0, 0, 0.5);
   --fx-shadow-window: 0 40px 90px rgba(0, 0, 0, 0.55);
+  --overlay: rgba(7, 7, 12, 0.7);
 }
 
 /* ------------------------------------------------------------------
@@ -191,6 +193,7 @@
   --color-tag-green-fg: var(--tag-green-fg);
   --color-tag-danger-bg: var(--tag-danger-bg);
   --color-tag-danger-fg: var(--tag-danger-fg);
+  --color-overlay: var(--overlay);
 
   --radius-tag: var(--r-tag);
   --radius-panel: var(--r-panel);
