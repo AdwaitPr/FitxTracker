@@ -14,15 +14,15 @@ Prototype paths are relative to `design/prototype/src/`. Real routes are in PORT
 - [x] 0.4 Screenshot every existing route (logged in) as the "before" set.
 
 ## Group 1: Tokens (files: index.css)
-- [ ] 1.1 Rewrite `src/app/globals.css`: light + dark tokens from the prototype `index.css`
+- [x] 1.1 Rewrite `src/app/globals.css`: light + dark tokens from the prototype `index.css`
       (--frame, --canvas, --surface, --inset, --ink, --ink-soft, --muted, --hairline, --primary*,
       --danger, all --tag-* pairs incl. a new --tag-danger-*), radii, shadows, `@theme inline`
       mapping, `@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *))`.
-- [ ] 1.2 Keep old variable names as `/* deprecated */` aliases (map in PORT-AUDIT.md section 6).
-- [ ] 1.3 Port utilities and motion: .micro .tnum .dashrule .no-scrollbar .app-window .fx-range
+- [x] 1.2 Keep old variable names as `/* deprecated */` aliases (map in PORT-AUDIT.md section 6).
+- [x] 1.3 Port utilities and motion: .micro .tnum .dashrule .no-scrollbar .app-window .fx-range
       .check-pop/.check-draw/.check-ripple .caret .rise .lift + reduced-motion kill switch.
-- [ ] 1.4 Fonts via next/font/google: Plus Jakarta Sans as `--font-display`, keep Inter.
-- [ ] 1.5 Theme: `src/app/actions/theme.ts` server action writes a `theme` cookie; root layout
+- [x] 1.4 Fonts via next/font/google: Plus Jakarta Sans as `--font-display`, keep Inter.
+- [x] 1.5 Theme: `src/app/actions/theme.ts` server action writes a `theme` cookie; root layout
       sets `data-theme` from the cookie with a pre-hydration fallback to prefers-color-scheme.
 - Verify: all existing pages still render, no flash on hard refresh in dark mode.
 
