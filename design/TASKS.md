@@ -27,9 +27,9 @@ Prototype paths are relative to `design/prototype/src/`. Real routes are in PORT
 - Verify: all existing pages still render, no flash on hard refresh in dark mode.
 
 ## Group 2: Primitives (files: ui.tsx, forms.tsx, icons.tsx)
-- [ ] 2.1 Refactor Card, Button, Input (same props as today + new variants). Remove JS hover
+- [x] 2.1 Refactor Card, Button, Input (same props as today + new variants). Remove JS hover
       handlers in favour of hover: classes.
-- [ ] 2.2 Add: Tag, IconButton, Segmented, ProgressBar, RingProgress, SectionHeader, StatChip.
+- [x] 2.2 Add: Tag, IconButton, Segmented, ProgressBar, RingProgress, SectionHeader, StatChip.
 - [ ] 2.3 Add: Popover, Menu, Modal (Esc, focus trap, scroll lock), Skeleton, Toast, EmptyState.
 - [ ] 2.4 Add controls: Slider, Stepper, Toggle, Chip, Disclosure, Select, Textarea.
 - [ ] 2.5 Custom SVGs: `Logo`, `MuscleGlyph`. All other icons via lucide-react.

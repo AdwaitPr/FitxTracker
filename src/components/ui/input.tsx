@@ -1,86 +1,102 @@
-"use client";
-
 import { cn } from "@/lib/utils";
-import { InputHTMLAttributes, forwardRef } from "react";
+import { AlertCircle } from "lucide-react";
+import {
+  InputHTMLAttributes,
+  ReactNode,
+  forwardRef,
+  useId,
+} from "react";
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
-    label?: string;
-    error?: string;
-    icon?: React.ReactNode;
+  label?: string;
+  hint?: string;
+  helperText?: string;
+  error?: string;
+  icon?: ReactNode;
+  suffix?: string;
 }
 
 const Input = forwardRef<HTMLInputElement, InputProps>(
-    ({ className, label, error, icon, id, ...props }, ref) => {
-        return (
-            <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
-                {label && (
-                    <label
-                        htmlFor={id}
-                        style={{
-                            fontSize: "14px",
-                            fontWeight: 500,
-                            color: "var(--text-secondary)",
-                        }}
-                    >
-                        {label}
-                    </label>
-                )}
-                <div style={{ position: "relative" }}>
-                    {icon && (
-                        <div
-                            style={{
-                                position: "absolute",
-                                left: "14px",
-                                top: "50%",
-                                transform: "translateY(-50%)",
-                                color: "var(--text-muted)",
-                                pointerEvents: "none",
-                                display: "flex",
-                                alignItems: "center",
-                            }}
-                        >
-                            {icon}
-                        </div>
-                    )}
-                    <input
-                        ref={ref}
-                        id={id}
-                        className={cn(className)}
-                        style={{
-                            width: "100%",
-                            borderRadius: "12px",
-                            paddingTop: "12px",
-                            paddingBottom: "12px",
-                            paddingLeft: icon ? "44px" : "16px",
-                            paddingRight: "16px",
-                            fontSize: "14px",
-                            outline: "none",
-                            background: "var(--bg-input)",
-                            color: "var(--text-primary)",
-                            border: error
-                                ? "2px solid var(--error)"
-                                : "1px solid var(--border)",
-                            transition: "border-color 0.2s",
-                        }}
-                        onFocus={(e) => {
-                            if (!error) e.currentTarget.style.borderColor = "var(--purple-primary)";
-                            props.onFocus?.(e);
-                        }}
-                        onBlur={(e) => {
-                            if (!error) e.currentTarget.style.borderColor = "var(--border)";
-                            props.onBlur?.(e);
-                        }}
-                        {...props}
-                    />
-                </div>
-                {error && (
-                    <p style={{ fontSize: "12px", color: "var(--error)" }}>{error}</p>
-                )}
+  (
+    {
+      className,
+      label,
+      hint,
+      helperText,
+      error,
+      icon,
+      suffix,
+      id: idProp,
+      ...props
+    },
+    ref
+  ) => {
+    const autoId = useId();
+    const id = idProp || autoId;
+    const activeHint = hint || helperText;
+
+    return (
+      <div className="flex w-full min-w-0 flex-col gap-1.5">
+        {label && (
+          <label
+            htmlFor={id}
+            className="block text-[13px] font-semibold text-ink-soft"
+          >
+            {label}
+          </label>
+        )}
+        <div className="relative flex items-center">
+          {icon && (
+            <div className="pointer-events-none absolute left-4 flex items-center text-ink-muted">
+              {icon}
             </div>
-        );
-    }
+          )}
+          <input
+            ref={ref}
+            id={id}
+            aria-invalid={!!error || undefined}
+            aria-describedby={
+              error
+                ? `${id}-err`
+                : activeHint
+                ? `${id}-hint`
+                : undefined
+            }
+            className={cn(
+              "h-11 w-full min-w-0 rounded-full border bg-surface px-4 text-[14px] text-ink placeholder:text-ink-muted transition-colors duration-200 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary disabled:cursor-not-allowed disabled:opacity-50",
+              error ? "border-danger" : "border-hairline focus:border-primary/50",
+              icon && "pl-11",
+              suffix && "pr-14",
+              className
+            )}
+            {...props}
+          />
+          {suffix && (
+            <span className="pointer-events-none absolute right-4 text-[12.5px] font-semibold text-ink-muted">
+              {suffix}
+            </span>
+          )}
+        </div>
+        {error ? (
+          <p
+            id={`${id}-err`}
+            role="alert"
+            className="flex items-center gap-1.5 text-[12px] font-medium text-danger"
+          >
+            <AlertCircle size={13} strokeWidth={2} className="shrink-0" />
+            {error}
+          </p>
+        ) : activeHint ? (
+          <p id={`${id}-hint`} className="text-[12px] text-ink-muted">
+            {activeHint}
+          </p>
+        ) : null}
+      </div>
+    );
+  }
 );
 
 Input.displayName = "Input";
 export { Input };
 export type { InputProps };
+

@@ -1,47 +1,42 @@
-"use client";
-
 import { cn } from "@/lib/utils";
 import { HTMLAttributes, forwardRef } from "react";
 
-interface CardProps extends HTMLAttributes<HTMLDivElement> {
-    hover?: boolean;
-    glow?: boolean;
+interface CardProps extends HTMLAttributes<HTMLElement> {
+  as?: "div" | "section" | "article";
+  hover?: boolean;
+  glow?: boolean;
 }
 
-const Card = forwardRef<HTMLDivElement, CardProps>(
-    ({ className, hover = false, glow = false, style, children, ...props }, ref) => {
-        return (
-            <div
-                ref={ref}
-                className={cn(
-                    glow && "glow-purple",
-                    className
-                )}
-                style={{
-                    background: "var(--bg-card)",
-                    border: "1px solid var(--border)",
-                    borderRadius: "16px",
-                    padding: "24px",
-                    transition: "all 0.3s",
-                    cursor: hover ? "pointer" : undefined,
-                    ...style,
-                }}
-                onMouseEnter={hover ? (e) => {
-                    e.currentTarget.style.borderColor = "rgba(124, 58, 237, 0.3)";
-                    e.currentTarget.style.background = "var(--bg-card-hover)";
-                } : undefined}
-                onMouseLeave={hover ? (e) => {
-                    e.currentTarget.style.borderColor = "var(--border)";
-                    e.currentTarget.style.background = "var(--bg-card)";
-                } : undefined}
-                {...props}
-            >
-                {children}
-            </div>
-        );
-    }
+const Card = forwardRef<HTMLElement, CardProps>(
+  (
+    {
+      className,
+      hover = false,
+      glow = false,
+      as: Component = "section",
+      children,
+      ...props
+    },
+    ref
+  ) => {
+    return (
+      <Component
+        ref={ref as unknown as React.Ref<HTMLDivElement>}
+        className={cn(
+          "rounded-card bg-surface shadow-soft border border-hairline p-6 transition-colors duration-200",
+          hover && "cursor-pointer hover:border-primary/40",
+          glow && "glow-purple",
+          className
+        )}
+        {...props}
+      >
+        {children}
+      </Component>
+    );
+  }
 );
 
 Card.displayName = "Card";
 export { Card };
 export type { CardProps };
+

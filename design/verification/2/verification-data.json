@@ -1,0 +1,68 @@
+{
+  "computedStyles": {
+    "card": {
+      "borderRadius": "20px",
+      "backgroundColor": "rgb(23, 23, 36)",
+      "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.35) 0px 8px 30px 0px",
+      "borderWidth": "1px",
+      "padding": "24px"
+    },
+    "cardCustomPadding": {
+      "padding": "20px"
+    },
+    "tagViolet": {
+      "borderRadius": "12px",
+      "backgroundColor": "rgba(133, 119, 240, 0.16)",
+      "color": "rgb(180, 169, 255)",
+      "fontSize": "11px",
+      "letterSpacing": "1.1px"
+    },
+    "btnPrimary": {
+      "borderRadius": "3.35544e+07px",
+      "backgroundColor": "rgb(133, 119, 240)",
+      "color": "rgb(255, 255, 255)",
+      "height": "44px"
+    },
+    "btnSizeSm": {
+      "height": "36px"
+    },
+    "inputDefault": {
+      "borderRadius": "3.35544e+07px",
+      "backgroundColor": "rgb(23, 23, 36)",
+      "height": "44px"
+    },
+    "iconButtonSolid": {
+      "borderRadius": "3.35544e+07px",
+      "backgroundColor": "rgb(133, 119, 240)",
+      "width": "40px",
+      "height": "40px"
+    },
+    "sectionHeading": {
+      "fontSize": "19px",
+      "fontWeight": "600",
+      "color": "rgb(243, 243, 248)"
+    },
+    "statChipVolume": {
+      "borderRadius": "20px",
+      "backgroundColor": "rgb(23, 23, 36)",
+      "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.35) 0px 8px 30px 0px"
+    }
+  },
+  "keyboardTest": {
+    "initialChecked": 1,
+    "initialTabindex": [
+      "-1",
+      "0",
+      "-1"
+    ],
+    "afterArrowRightChecked": 1,
+    "afterArrowRightTabindex": [
+      "-1",
+      "0",
+      "-1"
+    ],
+    "afterEndChecked": 1,
+    "afterHomeChecked": 1
+  },
+  "mobileSmButtonHeight": "44px"
+}

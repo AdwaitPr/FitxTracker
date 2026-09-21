@@ -24,8 +24,8 @@ const themeScript = `
   try {
     var theme = document.documentElement.getAttribute('data-theme');
     if (!theme) {
-      var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      var resolvedTheme = prefersDark ? 'dark' : 'light';
+      /* TODO Group 13: restore prefers-color-scheme */
+      var resolvedTheme = 'dark';
       document.documentElement.setAttribute('data-theme', resolvedTheme);
       document.cookie = 'theme=' + resolvedTheme + '; path=/; max-age=31536000; SameSite=Lax';
     }
@@ -40,8 +40,9 @@ export default async function RootLayout({
 }>) {
   const cookieStore = await cookies();
   const themeCookie = cookieStore.get("theme")?.value;
+  /* TODO Group 13: restore prefers-color-scheme */
   const initialTheme =
-    themeCookie === "light" || themeCookie === "dark" ? themeCookie : undefined;
+    themeCookie === "light" || themeCookie === "dark" ? themeCookie : "dark";
 
   return (
     <html
