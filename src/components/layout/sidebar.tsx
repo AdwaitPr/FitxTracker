@@ -2,137 +2,172 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { signOut } from "next-auth/react";
 import { cn } from "@/lib/utils";
+import { Logo } from "@/components/layout/logo";
 import {
-    LayoutDashboard,
-    Dumbbell,
-    History,
-    Library,
-    TrendingUp,
-    User,
-    Plus,
-    Heart,
-    Brain,
-    BarChart3,
-    ListOrdered,
+  LayoutGrid,
+  Dumbbell,
+  History,
+  List,
+  Activity,
+  TrendingUp,
+  Sparkles,
+  Calendar,
+  ChartNoAxesColumn,
+  User,
+  Settings,
+  LogOut,
 } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 
-const navItems = [
-    { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
-    { href: "/workouts/new", label: "New Workout", icon: Plus },
-    { href: "/workouts/history", label: "History", icon: History },
-    { href: "/exercises", label: "Exercises", icon: Library },
-    { href: "/recovery", label: "Recovery", icon: Heart },
-    { href: "/progress", label: "Progress", icon: TrendingUp },
-    { href: "/profile", label: "Profile", icon: User },
+export interface NavItem {
+  id: string;
+  label: string;
+  href: string;
+  icon: LucideIcon;
+}
+
+export const navSections: { label: string; items: NavItem[] }[] = [
+  {
+    label: "Overview",
+    items: [
+      { id: "dashboard", label: "Dashboard", href: "/dashboard", icon: LayoutGrid },
+      { id: "new", label: "New Workout", href: "/workouts/new", icon: Dumbbell },
+      { id: "history", label: "History", href: "/workouts/history", icon: History },
+      { id: "exercises", label: "Exercises", href: "/exercises", icon: List },
+      { id: "recovery", label: "Recovery", href: "/recovery", icon: Activity },
+      { id: "progress", label: "Progress", href: "/progress", icon: TrendingUp },
+    ],
+  },
+  {
+    label: "Cognitive",
+    items: [
+      { id: "cognitype", label: "CogniType", href: "/cognitype", icon: Sparkles },
+      { id: "sessions", label: "Sessions", href: "/cognitype/sessions", icon: Calendar },
+      { id: "analytics", label: "Analytics", href: "/cognitype/analytics", icon: ChartNoAxesColumn },
+    ],
+  },
+  {
+    label: "Account",
+    items: [{ id: "profile", label: "Profile", href: "/profile", icon: User }],
+  },
 ];
 
-const cogniNavItems = [
-    { href: "/cognitype", label: "CogniType", icon: Brain },
-    { href: "/cognitype/sessions", label: "Sessions", icon: ListOrdered },
-    { href: "/cognitype/analytics", label: "Analytics", icon: BarChart3 },
-];
-
+export function activeIdFor(path: string): string {
+  if (path.startsWith("/cognitype/analytics")) return "analytics";
+  if (path.startsWith("/cognitype/sessions")) return "sessions";
+  if (path.startsWith("/cognitype")) return "cognitype";
+  if (path.startsWith("/workouts/new")) return "new";
+  if (path.startsWith("/workouts")) return "history";
+  if (path.startsWith("/exercises")) return "exercises";
+  if (path.startsWith("/recovery")) return "recovery";
+  if (path.startsWith("/progress")) return "progress";
+  if (path.startsWith("/profile")) return "profile";
+  return "dashboard";
+}
 
 export function Sidebar() {
-    const pathname = usePathname();
+  const pathname = usePathname() || "/dashboard";
+  const active = activeIdFor(pathname);
+  const rowCls =
+    "group flex w-full items-center gap-3 rounded-[14px] px-2 py-2.5 text-left transition-colors duration-200 hover:bg-canvas focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary";
 
-    const renderNavItem = (item: { href: string; label: string; icon: typeof LayoutDashboard }) => {
-        const isActive = pathname === item.href || pathname?.startsWith(item.href + "/");
-        const Icon = item.icon;
+  return (
+    <nav
+      aria-label="Primary"
+      className="sticky top-0 hidden h-screen w-[76px] shrink-0 flex-col border-r border-hairline bg-surface px-3 py-7 md:flex xl:w-[260px] xl:px-5"
+    >
+      <div className="px-1 xl:px-2">
+        <span className="xl:hidden">
+          <Logo compact href="/dashboard" />
+        </span>
+        <span className="hidden xl:inline">
+          <Logo href="/dashboard" />
+        </span>
+      </div>
 
-        return (
-            <Link
-                key={item.href}
-                href={item.href}
-                className={cn(
-                    "flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200",
-                    isActive
-                        ? "gradient-purple text-white shadow-lg shadow-purple-primary/20"
-                        : "hover:bg-[var(--bg-card-hover)]"
-                )}
-                style={{
-                    color: isActive ? "#ffffff" : "var(--text-muted)",
-                }}
-            >
-                <Icon className="w-5 h-5" />
-                {item.label}
-            </Link>
-        );
-    };
+      <div className="mt-10 flex-1 space-y-8 overflow-y-auto no-scrollbar">
+        {navSections.map((section) => (
+          <div key={section.label}>
+            <p className="micro mb-3 hidden px-3 text-ink-muted xl:block">
+              {section.label}
+            </p>
+            <ul className="space-y-1.5">
+              {section.items.map((item) => {
+                const isActive = active === item.id;
+                const Icon = item.icon;
+                return (
+                  <li key={item.id}>
+                    <Link
+                      href={item.href}
+                      title={item.label}
+                      aria-label={item.label}
+                      aria-current={isActive ? "page" : undefined}
+                      className={rowCls}
+                    >
+                      <span
+                        className={cn(
+                          "grid h-9 w-9 shrink-0 place-items-center rounded-[11px] transition-colors duration-200",
+                          isActive
+                            ? "bg-primary-soft text-primary"
+                            : "text-ink-muted group-hover:text-primary"
+                        )}
+                      >
+                        <Icon
+                          size={20}
+                          strokeWidth={isActive ? 1.9 : 1.5}
+                          aria-hidden="true"
+                        />
+                      </span>
+                      <span
+                        className={cn(
+                          "hidden truncate text-[14.5px] xl:block",
+                          isActive
+                            ? "font-semibold text-ink"
+                            : "font-medium text-ink-soft group-hover:text-ink"
+                        )}
+                      >
+                        {item.label}
+                      </span>
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        ))}
+      </div>
 
-    return (
-        <aside
-            className="hidden lg:flex flex-col w-64 h-screen fixed left-0 top-0 border-r z-40"
-            style={{
-                background: "var(--bg-card)",
-                borderColor: "var(--border)",
-            }}
+      <div className="mt-6 space-y-1.5 border-t border-hairline pt-5">
+        <Link
+          href="/profile?tab=settings"
+          title="Settings"
+          aria-label="Settings"
+          className={rowCls}
         >
-            {/* Logo */}
-            <div className="p-6 border-b" style={{ borderColor: "var(--border)" }}>
-                <Link href="/dashboard" className="flex items-center gap-3">
-                    <div
-                        className="w-10 h-10 rounded-xl flex items-center justify-center gradient-purple"
-                    >
-                        <Dumbbell className="w-5 h-5 text-white" />
-                    </div>
-                    <span className="text-xl font-bold gradient-text">FitxTracker</span>
-                </Link>
-            </div>
-
-            {/* Nav Items */}
-            <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
-                {navItems.map(renderNavItem)}
-
-                {/* CogniType section */}
-                <div
-                    style={{
-                        margin: "12px 0 8px",
-                        padding: "0 16px",
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "8px",
-                    }}
-                >
-                    <div
-                        style={{
-                            height: "1px",
-                            flex: 1,
-                            background: "var(--border)",
-                        }}
-                    />
-                    <span
-                        style={{
-                            fontSize: "9px",
-                            fontWeight: 700,
-                            textTransform: "uppercase",
-                            letterSpacing: "0.1em",
-                            color: "var(--text-muted)",
-                        }}
-                    >
-                        Cognitive
-                    </span>
-                    <div
-                        style={{
-                            height: "1px",
-                            flex: 1,
-                            background: "var(--border)",
-                        }}
-                    />
-                </div>
-                {cogniNavItems.map(renderNavItem)}
-            </nav>
-
-            {/* Footer */}
-            <div
-                className="p-4 border-t"
-                style={{ borderColor: "var(--border)" }}
-            >
-                <p className="text-xs text-center" style={{ color: "var(--text-muted)" }}>
-                    FitxTracker v1.0
-                </p>
-            </div>
-        </aside>
-    );
+          <span className="grid h-9 w-9 shrink-0 place-items-center rounded-[11px] text-ink-muted transition-colors duration-200 group-hover:text-primary">
+            <Settings size={20} strokeWidth={1.5} aria-hidden="true" />
+          </span>
+          <span className="hidden text-[14.5px] font-medium text-ink-soft group-hover:text-ink xl:block">
+            Settings
+          </span>
+        </Link>
+        <button
+          type="button"
+          title="Logout"
+          aria-label="Logout"
+          onClick={() => signOut({ callbackUrl: "/login" })}
+          className="group flex w-full items-center gap-3 rounded-[14px] px-2 py-2.5 text-danger transition-colors duration-200 hover:bg-tag-danger-bg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary cursor-pointer"
+        >
+          <span className="grid h-9 w-9 shrink-0 place-items-center rounded-[11px]">
+            <LogOut size={20} strokeWidth={1.5} aria-hidden="true" />
+          </span>
+          <span className="hidden text-[14.5px] font-semibold xl:block">
+            Logout
+          </span>
+        </button>
+      </div>
+    </nav>
+  );
 }

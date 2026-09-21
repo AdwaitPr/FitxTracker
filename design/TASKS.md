@@ -41,10 +41,10 @@ Prototype paths are relative to `design/prototype/src/`. Real routes are in PORT
       grid-heatmap, scatter, sparkline. Keep `summary` text, focus+hover tooltips, animations.
 
 ## Group 4: Shell (files: chrome.tsx)
-- [ ] 4.1 Sidebar (OVERVIEW / COGNITIVE / ACCOUNT, Settings, orange Logout), 260px / 76px rail.
-- [ ] 4.2 Top bar: search (navigation search per DECISIONS 8), log-workout link, bell, avatar, theme toggle.
-- [ ] 4.3 Mobile bottom nav with centre Log button and safe-area padding.
-- [ ] 4.4 `(dashboard)/layout.tsx`: 3-column shell with right-rail slot; `.app-window` >=1600px.
+- [x] 4.1 Sidebar (OVERVIEW / COGNITIVE / ACCOUNT, Settings, orange Logout), 260px / 76px rail.
+- [x] 4.2 Top bar: search (navigation search per DECISIONS 8), log-workout link, bell, avatar, theme toggle.
+- [x] 4.3 Mobile bottom nav with centre Log button and safe-area padding.
+- [x] 4.4 `(dashboard)/layout.tsx`: 3-column shell with right-rail slot; `.app-window` >=1600px.
 - Verify: 360 / 768 / 1280 / 1600, light + dark. Active-nav logic unchanged.
 
 ## Group 5: Dashboard (files: panels.tsx, pages/Dashboard.tsx)  route /dashboard

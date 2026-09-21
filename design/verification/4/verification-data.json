@@ -1,0 +1,29 @@
+{
+  "timestamp": "2026-09-21T15:33:22.419Z",
+  "desktop": {
+    "hasSidebar": true,
+    "sidebarWidth": "260px",
+    "hasTopBar": true,
+    "mobileNavHiddenOnDesktop": true,
+    "hasAppWindow": true,
+    "hasSearchInput": true,
+    "hasThemeToggle": true,
+    "activeLinkId": "Dashboard",
+    "activeLinkHref": "/dashboard"
+  },
+  "tablet": {
+    "sidebarWidth": "76px",
+    "mobileNavHidden": true
+  },
+  "mobile": {
+    "sidebarHidden": true,
+    "mobileNavVisible": true,
+    "centerLogElevated": true,
+    "centerLogH": "56px"
+  },
+  "ultrawide": {
+    "maxWidth": "1720px",
+    "borderRadius": "32px",
+    "boxShadow": true
+  }
+}
