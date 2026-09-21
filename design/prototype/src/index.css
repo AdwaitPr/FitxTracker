@@ -1,0 +1,307 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ------------------------------------------------------------------
+   FitxTracker design tokens — raw values.
+   Each one is mapped 1:1 into the @theme block below, so this file can
+   be ported to a Tailwind v4 @theme with no renaming.
+------------------------------------------------------------------ */
+:root {
+  /* surfaces */
+  --frame: #b9bfca;
+  --canvas: #f5f6fb;
+  --surface: #ffffff;
+  --inset: #f7f8fc;
+
+  /* ink */
+  --ink: #0f0f14;
+  --ink-soft: #4a4f63;
+  /* accessible refinement of the reference #8A8FA3 (4.9:1 on white) */
+  --muted: #6b7086;
+  --hairline: #e8eaf2;
+
+  /* brand */
+  --primary: #6c5ce1;
+  --primary-dark: #5a4bd1;
+  --primary-soft: #e9e6fb;
+  --primary-soft-2: #c9c3f5;
+  --danger: #f26b3a;
+
+  /* tag index-tab pairs (tint bg / accessible fg) */
+  --tag-violet-bg: #eae7fb;
+  --tag-violet-fg: #5a4bd1;
+  --tag-cyan-bg: #e3f4f8;
+  --tag-cyan-fg: #1a6f8a;
+  --tag-pink-bg: #fce7f6;
+  --tag-pink-fg: #b02e92;
+  --tag-amber-bg: #fff3dc;
+  --tag-amber-fg: #8f5a00;
+  --tag-green-bg: #e2f7ec;
+  --tag-green-fg: #0a6e47;
+
+  /* radii */
+  --r-tag: 12px;
+  --r-panel: 16px;
+  --r-card: 20px;
+  --r-hero: 28px;
+
+  /* shadows (raw layer is fx-prefixed so it can feed @theme without a
+     self-referential var(); --shadow-soft maps to fx-shadow-soft 1:1) */
+  --fx-shadow-soft: 0 8px 30px rgba(20, 20, 60, 0.06);
+  --fx-shadow-lift: 0 14px 38px rgba(20, 20, 60, 0.1);
+  --fx-shadow-window: 0 40px 90px rgba(20, 24, 45, 0.28);
+
+  /* type */
+  --fx-font-display: "Plus Jakarta Sans", "Manrope", Inter, ui-sans-serif, system-ui,
+    -apple-system, "Segoe UI", sans-serif;
+}
+
+.dark {
+  --frame: #07070c;
+  --canvas: #0e0e16;
+  --surface: #171724;
+  --inset: #1e1e2e;
+
+  --ink: #f3f3f8;
+  --ink-soft: #c3c6d6;
+  --muted: #9a9fb5;
+  --hairline: #262638;
+
+  --primary: #8577f0;
+  --primary-dark: #6c5ce1;
+  --primary-soft: rgba(133, 119, 240, 0.16);
+  --primary-soft-2: rgba(133, 119, 240, 0.38);
+  --danger: #f26b3a;
+
+  --tag-violet-bg: rgba(133, 119, 240, 0.16);
+  --tag-violet-fg: #b4a9ff;
+  --tag-cyan-bg: rgba(47, 164, 199, 0.16);
+  --tag-cyan-fg: #7fd3ec;
+  --tag-pink-bg: rgba(217, 70, 181, 0.16);
+  --tag-pink-fg: #f49bdd;
+  --tag-amber-bg: rgba(217, 138, 0, 0.16);
+  --tag-amber-fg: #f2c071;
+  --tag-green-bg: rgba(18, 166, 106, 0.16);
+  --tag-green-fg: #6fe0ae;
+
+  --fx-shadow-soft: 0 8px 30px rgba(0, 0, 0, 0.35);
+  --fx-shadow-lift: 0 14px 38px rgba(0, 0, 0, 0.5);
+  --fx-shadow-window: 0 40px 90px rgba(0, 0, 0, 0.55);
+}
+
+/* theme mapping ---------------------------------------------------- */
+@theme inline {
+  --color-frame: var(--frame);
+  --color-canvas: var(--canvas);
+  --color-surface: var(--surface);
+  --color-inset: var(--inset);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-muted: var(--muted);
+  --color-hairline: var(--hairline);
+  --color-primary: var(--primary);
+  --color-primary-dark: var(--primary-dark);
+  --color-primary-soft: var(--primary-soft);
+  --color-primary-soft-2: var(--primary-soft-2);
+  --color-danger: var(--danger);
+  --color-tag-violet-bg: var(--tag-violet-bg);
+  --color-tag-violet-fg: var(--tag-violet-fg);
+  --color-tag-cyan-bg: var(--tag-cyan-bg);
+  --color-tag-cyan-fg: var(--tag-cyan-fg);
+  --color-tag-pink-bg: var(--tag-pink-bg);
+  --color-tag-pink-fg: var(--tag-pink-fg);
+  --color-tag-amber-bg: var(--tag-amber-bg);
+  --color-tag-amber-fg: var(--tag-amber-fg);
+  --color-tag-green-bg: var(--tag-green-bg);
+  --color-tag-green-fg: var(--tag-green-fg);
+
+  --radius-tag: var(--r-tag);
+  --radius-panel: var(--r-panel);
+  --radius-card: var(--r-card);
+  --radius-hero: var(--r-hero);
+
+  --shadow-soft: var(--fx-shadow-soft);
+  --shadow-lift: var(--fx-shadow-lift);
+  --shadow-window: var(--fx-shadow-window);
+
+  --font-display: var(--fx-font-display);
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    margin: 0;
+    background: var(--frame);
+    color: var(--ink);
+    font-family: var(--fx-font-display);
+    font-feature-settings: "tnum" 1, "ss01" 1;
+    -webkit-font-smoothing: antialiased;
+  }
+  :focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+  ::selection {
+    background: var(--primary-soft-2);
+    color: var(--ink);
+  }
+}
+
+@utility micro {
+  font-size: 11px;
+  line-height: 1.2;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+@utility tnum {
+  font-variant-numeric: tabular-nums;
+}
+
+@utility no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@utility dashrule {
+  border-bottom: 1px dashed var(--hairline);
+}
+
+/* outer grey frame only on very wide screens ------------------------ */
+.app-window {
+  background: var(--canvas);
+}
+@media (min-width: 1600px) {
+  .app-window {
+    max-width: 1720px;
+    margin: 28px auto;
+    border-radius: 32px;
+    box-shadow: var(--fx-shadow-window);
+    overflow: clip;
+  }
+}
+
+/* range slider ------------------------------------------------------ */
+.fx-range {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 44px;
+  background: transparent;
+  cursor: pointer;
+}
+.fx-range::-webkit-slider-runnable-track {
+  height: 8px;
+  border-radius: 999px;
+  background: linear-gradient(to right, var(--primary) var(--pct), var(--hairline) var(--pct));
+}
+.fx-range::-moz-range-track {
+  height: 8px;
+  border-radius: 999px;
+  background: var(--hairline);
+}
+.fx-range::-moz-range-progress {
+  height: 8px;
+  border-radius: 999px;
+  background: var(--primary);
+}
+.fx-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  margin-top: -9px;
+  width: 26px;
+  height: 26px;
+  border-radius: 999px;
+  background: var(--surface);
+  border: 2px solid var(--primary);
+  box-shadow: var(--fx-shadow-soft);
+  transition: transform 150ms ease-out;
+}
+.fx-range::-moz-range-thumb {
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  background: var(--surface);
+  border: 2px solid var(--primary);
+  box-shadow: var(--fx-shadow-soft);
+}
+.fx-range:active::-webkit-slider-thumb {
+  transform: scale(1.1);
+}
+
+/* set-complete check --------------------------------------------- */
+@keyframes fx-pop {
+  0% { transform: scale(0.8); }
+  55% { transform: scale(1.12); }
+  100% { transform: scale(1); }
+}
+@keyframes fx-draw {
+  from { stroke-dashoffset: 24; }
+  to { stroke-dashoffset: 0; }
+}
+@keyframes fx-ripple {
+  from { transform: scale(1); opacity: 0.45; }
+  to { transform: scale(1.9); opacity: 0; }
+}
+.check-pop { animation: fx-pop 320ms cubic-bezier(0.2, 0.8, 0.2, 1); }
+.check-draw { stroke-dasharray: 24; animation: fx-draw 260ms 80ms ease-out both; }
+.check-ripple::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  background: var(--tag-green-fg);
+  animation: fx-ripple 520ms ease-out forwards;
+}
+
+/* typing canvas ------------------------------------------------------ */
+@keyframes fx-caret { 0%, 100% { border-color: var(--primary); } 50% { border-color: transparent; } }
+.caret { border-left: 2px solid var(--primary); animation: fx-caret 1s step-end infinite; margin-left: -1px; }
+
+/* motion ------------------------------------------------------------ */
+@keyframes fx-rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.rise {
+  animation: fx-rise 480ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.lift {
+  transition: transform 200ms ease-out, box-shadow 200ms ease-out;
+}
+.lift:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--fx-shadow-lift);
+}
+
+.grow-bar {
+  transform-box: fill-box;
+  transform-origin: bottom;
+  transition: transform 620ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
