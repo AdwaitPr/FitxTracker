@@ -48,10 +48,10 @@ Prototype paths are relative to `design/prototype/src/`. Real routes are in PORT
 - Verify: 360 / 768 / 1280 / 1600, light + dark. Active-nav logic unchanged.
 
 ## Group 5: Dashboard (files: panels.tsx, pages/Dashboard.tsx)  route /dashboard
-- [ ] 5.1 Hero banner variants keyed by `getWorkoutRecommendation().level`. No dev switcher.
-- [ ] 5.2 Stat chips from real queries (DECISIONS 3, weeklyGoal constant 4).
-- [ ] 5.3 Recent workouts carousel (no hearts), workout table, statistic card, recovery card.
-- [ ] 5.4 Empty state for a brand-new user; loading skeletons.
+- [x] 5.1 Hero banner variants keyed by `getWorkoutRecommendation().level`. No dev switcher.
+- [x] 5.2 Stat chips from real queries (DECISIONS 3, weeklyGoal constant 4).
+- [x] 5.3 Recent workouts carousel (no hearts), workout table, statistic card, recovery card.
+- [x] 5.4 Empty state for a brand-new user; loading skeletons.
 - Verify with a brand-new account AND an account with logged workouts + recovery.
 
 ## Group 6: Workout logger (files: pages/NewWorkout.tsx)  route /workouts/new
