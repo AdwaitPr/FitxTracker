@@ -1,0 +1,33 @@
+{
+  "timestamp": "2026-09-22T10:44:14.520Z",
+  "kpis": {
+    "hasRestTimer": true,
+    "restTimerLabel": "Rest timer, 1:59 remaining",
+    "kpis": [
+      "800 kg",
+      "1/3",
+      "8.0"
+    ]
+  },
+  "modal": {
+    "hasModal": true,
+    "title": "Workout saved",
+    "text": "Workout saved\n\nAutomated E2E Chest Workout\n\n2026-09-22 · 60 min · 1 exercises · 1 sets · 800 kg\n\nLog another\nView history"
+  },
+  "database": {
+    "id": "cmucjqwha0009ud9v1i821ccr",
+    "name": "Automated E2E Chest Workout",
+    "duration": 60,
+    "exercise": "Barbell Bench Press",
+    "setsCount": 3,
+    "set1Reps": 10,
+    "set1Weight": 80,
+    "set1Completed": true,
+    "set1Tempo": "3-1-3",
+    "set1Rpe": 8
+  },
+  "prefill": {
+    "prefilledName": "Automated E2E Chest Workout (Copy)",
+    "prefilledExercise": "Barbell Bench Press"
+  }
+}

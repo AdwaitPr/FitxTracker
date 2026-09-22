@@ -55,10 +55,10 @@ Prototype paths are relative to `design/prototype/src/`. Real routes are in PORT
 - Verify with a brand-new account AND an account with logged workouts + recovery.
 
 ## Group 6: Workout logger (files: pages/NewWorkout.tsx)  route /workouts/new
-- [ ] 6.1 Two-pane layout; keep the EXISTING save path and payload shape (POST /api/workouts).
-- [ ] 6.2 Set grid with completed, restTime and the Advanced columns using real field names.
-- [ ] 6.3 Rest timer pill, elapsed ring, live KPIs, library modal (search + muscle + equipment).
-- [ ] 6.4 `?from=<id>` prefill, "Use last workout", mobile sticky action bar, saved summary.
+- [x] 6.1 Two-pane layout; keep the EXISTING save path and payload shape (POST /api/workouts).
+- [x] 6.2 Set grid with completed, restTime and the Advanced columns using real field names.
+- [x] 6.3 Rest timer pill, elapsed ring, live KPIs, library modal (search + muscle + equipment).
+- [x] 6.4 `?from=<id>` prefill, "Use last workout", mobile sticky action bar, saved summary.
 - Verify: save a workout end to end and confirm it appears in history with all set fields.
 
 ## Group 7: History + detail (files: pages/History.tsx)  routes /workouts/history, /workouts/[id]

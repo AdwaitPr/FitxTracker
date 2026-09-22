@@ -12,7 +12,7 @@ export async function POST(request: NextRequest) {
         }
 
         const body = await request.json();
-        const { name, notes, exercises } = body;
+        const { name, notes, date, duration, exercises } = body;
 
         if (!name || !exercises || exercises.length === 0) {
             return NextResponse.json(
@@ -25,6 +25,8 @@ export async function POST(request: NextRequest) {
             data: {
                 name,
                 notes: notes || null,
+                date: date ? new Date(date) : undefined,
+                duration: typeof duration === "number" ? duration : null,
                 userId: session.user.id,
                 exercises: {
                     create: exercises.map(
@@ -40,6 +42,7 @@ export async function POST(request: NextRequest) {
                                     tempo?: string;
                                     addedWeight?: number;
                                     perceivedDifficulty?: number;
+                                    completed?: boolean;
                                 }[];
                             },
                             exIdx: number
@@ -58,6 +61,7 @@ export async function POST(request: NextRequest) {
                                             tempo?: string;
                                             addedWeight?: number;
                                             perceivedDifficulty?: number;
+                                            completed?: boolean;
                                         },
                                         setIdx: number
                                     ) => ({
@@ -65,7 +69,7 @@ export async function POST(request: NextRequest) {
                                         reps: set.reps,
                                         weight: set.weight,
                                         restTime: set.restTime || null,
-                                        completed: true,
+                                        completed: typeof set.completed === "boolean" ? set.completed : true,
                                         variationType: set.variationType || null,
                                         tempo: set.tempo || null,
                                         addedWeight: set.addedWeight || null,
