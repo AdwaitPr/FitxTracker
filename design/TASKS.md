@@ -71,8 +71,8 @@ Prototype paths are relative to `design/prototype/src/`. Real routes are in PORT
 - [x] 8.2 14-day history and sleep-vs-stress chart. Static "how it is calculated" popover.
 
 ## Group 9: Progress (files: pages/Progress.tsx)  route /progress
-- [ ] 9.1 Modules from progress.ts data; range selector; skeleton/Suspense loading.
-- [ ] 9.2 Body-weight chart from BodyWeightLog; log-weight modal per DECISIONS 1.
+- [x] 9.1 Modules from progress.ts data; range selector; skeleton/Suspense loading.
+- [x] 9.2 Body-weight chart from BodyWeightLog; log-weight modal per DECISIONS 1.
 
 ## Group 10: Exercises + Profile (files: pages/Account.tsx)  routes /exercises, /profile
 - [ ] 10.1 Exercises grid with filters, no favourites, no custom-exercise button.

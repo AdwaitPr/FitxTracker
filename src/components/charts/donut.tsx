@@ -109,7 +109,7 @@ export function Donut({
         </div>
       </div>
 
-      <ul className="grid w-full grid-cols-2 gap-x-4 gap-y-2.5">
+      <ul className="grid min-w-0 flex-1 w-full grid-cols-2 gap-x-4 gap-y-2.5">
         {slices.map((s, i) => {
           const pct = total > 0 ? Math.round((s.value / total) * 100) : 0;
           return (
@@ -129,7 +129,7 @@ export function Donut({
                   className="h-3 w-3 shrink-0 rounded-full"
                   style={{ background: s.color }}
                 />
-                <span className="flex-1 truncate text-[13px] font-medium text-ink-soft">
+                <span className="flex-1 text-[13px] font-medium text-ink-soft">
                   {s.label}
                 </span>
                 <span className="tnum text-[12.5px] font-semibold text-ink">{pct}%</span>
