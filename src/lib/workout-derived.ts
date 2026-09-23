@@ -83,10 +83,7 @@ export function deriveAvgRpe(
   const rpes: number[] = [];
   for (const ex of exercises) {
     for (const s of ex.sets) {
-      if (
-        typeof s.perceivedDifficulty === "number" &&
-        s.perceivedDifficulty > 0
-      ) {
+      if (s.perceivedDifficulty != null) {
         rpes.push(s.perceivedDifficulty);
       }
     }

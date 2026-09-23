@@ -2,7 +2,7 @@ import { getServerSession } from "next-auth";
 import { notFound, redirect } from "next/navigation";
 import { authOptions } from "@/lib/auth-options";
 import { prisma } from "@/lib/prisma";
-import { calculateRecoveryScore } from "@/lib/alerts";
+import { calculateRecoveryScore, getWorkoutRecommendation } from "@/lib/alerts";
 import { WorkoutDetailClient } from "@/components/workouts";
 import {
   deriveWorkoutVolume,
@@ -100,10 +100,14 @@ export default async function WorkoutDetailPage({
   const avgRpe = deriveAvgRpe(workout.exercises);
 
   const recoveryThatDay = dailyRecovery
-    ? {
-        score: calculateRecoveryScore(dailyRecovery),
-        label: dailyRecovery.sleepQuality || "Logged",
-      }
+    ? (() => {
+        const score = calculateRecoveryScore(dailyRecovery);
+        const recommendation = getWorkoutRecommendation(dailyRecovery);
+        const label =
+          recommendation.level.charAt(0).toUpperCase() +
+          recommendation.level.slice(1);
+        return { score, label };
+      })()
     : null;
 
   const serializedWorkout: DetailWorkoutData = {
