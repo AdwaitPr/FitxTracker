@@ -8,6 +8,7 @@ import {
   deriveWorkoutVolume,
   derivePrimaryMuscle,
   deriveTopSet,
+  deriveAvgRpe,
   getMuscleTone,
 } from "@/lib/workout-derived";
 import type { DetailWorkoutData } from "@/components/workouts";
@@ -62,60 +63,41 @@ export default async function WorkoutDetailPage({
   const endOfDay = new Date(workoutDate);
   endOfDay.setHours(23, 59, 59, 999);
 
-  // Parallel fetch: previous workout, next workout, recovery log, weight log
-  const [prevWorkout, nextWorkout, dailyRecovery, bodyWeightLog] =
-    await Promise.all([
-      prisma.workout.findFirst({
-        where: {
-          userId,
-          date: { lt: workout.date },
-          NOT: { id: workout.id },
-        },
-        orderBy: { date: "desc" },
-        select: { id: true },
-      }),
-      prisma.workout.findFirst({
-        where: {
-          userId,
-          date: { gt: workout.date },
-          NOT: { id: workout.id },
-        },
-        orderBy: { date: "asc" },
-        select: { id: true },
-      }),
-      prisma.dailyRecovery.findFirst({
-        where: {
-          userId,
-          date: { gte: startOfDay, lte: endOfDay },
-        },
-      }),
-      prisma.bodyWeightLog.findFirst({
-        where: {
-          userId,
-          date: { lte: endOfDay },
-        },
-        orderBy: { date: "desc" },
-        select: { weight: true },
-      }),
-    ]);
+  // Parallel fetch: all workout IDs in compound order, daily recovery, weight log
+  const [allUserWorkouts, dailyRecovery, bodyWeightLog] = await Promise.all([
+    prisma.workout.findMany({
+      where: { userId },
+      orderBy: [{ date: "desc" }, { createdAt: "desc" }, { id: "desc" }],
+      select: { id: true },
+    }),
+    prisma.dailyRecovery.findFirst({
+      where: {
+        userId,
+        date: { gte: startOfDay, lte: endOfDay },
+      },
+    }),
+    prisma.bodyWeightLog.findFirst({
+      where: {
+        userId,
+        date: { lte: endOfDay },
+      },
+      orderBy: { date: "desc" },
+      select: { weight: true },
+    }),
+  ]);
+
+  const currentIdx = allUserWorkouts.findIndex((w) => w.id === id);
+  const prevWorkout =
+    currentIdx >= 0 && currentIdx < allUserWorkouts.length - 1
+      ? allUserWorkouts[currentIdx + 1]
+      : null;
+  const nextWorkout = currentIdx > 0 ? allUserWorkouts[currentIdx - 1] : null;
 
   const volume = deriveWorkoutVolume(workout.exercises);
   const primaryMuscle = derivePrimaryMuscle(workout.exercises);
   const topSet = deriveTopSet(workout.exercises);
   const muscleTone = getMuscleTone(primaryMuscle);
-
-  const rpeValues = workout.exercises.flatMap((ex) =>
-    ex.sets
-      .filter(
-        (s) =>
-          typeof s.perceivedDifficulty === "number" && s.perceivedDifficulty > 0
-      )
-      .map((s) => s.perceivedDifficulty!)
-  );
-  const avgRpe =
-    rpeValues.length > 0
-      ? rpeValues.reduce((a, b) => a + b, 0) / rpeValues.length
-      : null;
+  const avgRpe = deriveAvgRpe(workout.exercises);
 
   const recoveryThatDay = dailyRecovery
     ? {

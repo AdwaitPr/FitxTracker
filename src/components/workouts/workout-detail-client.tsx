@@ -148,8 +148,8 @@ function WorkoutDetailInner({
     const facts: Array<[string, string]> = [];
 
     if (workout.duration && workout.duration > 0) {
-      const fin = new Date(workout.createdAtISO || workout.dateISO);
-      const start = new Date(fin.getTime() - workout.duration * 60 * 1000);
+      const start = new Date(workout.dateISO);
+      const fin = new Date(start.getTime() + workout.duration * 60 * 1000);
 
       facts.push([
         "Started",

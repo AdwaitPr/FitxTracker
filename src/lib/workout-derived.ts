@@ -75,6 +75,26 @@ export function derivePrimaryMuscle(
   return topGroup;
 }
 
+export function deriveAvgRpe(
+  exercises: Array<{
+    sets: Array<{ perceivedDifficulty?: number | null }>;
+  }>
+): number | null {
+  const rpes: number[] = [];
+  for (const ex of exercises) {
+    for (const s of ex.sets) {
+      if (
+        typeof s.perceivedDifficulty === "number" &&
+        s.perceivedDifficulty > 0
+      ) {
+        rpes.push(s.perceivedDifficulty);
+      }
+    }
+  }
+  if (rpes.length === 0) return null;
+  return rpes.reduce((a, b) => a + b, 0) / rpes.length;
+}
+
 export function deriveTopSet(
   exercises: Array<{
     exercise: { name: string };
@@ -105,7 +125,7 @@ export function deriveTopSet(
   if (topWeight > 0) {
     return `${topExName} ${topWeight} kg × ${topReps}`;
   }
-  return `${topExName} ${topReps} reps`;
+  return `${topExName} Bodyweight × ${topReps}`;
 }
 
 export function formatWeekLabel(dateInput: Date | string, referenceNow = new Date()): string {

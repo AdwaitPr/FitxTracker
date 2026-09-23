@@ -31,7 +31,7 @@ export default async function WorkoutHistoryPage({
 
   const workouts = await prisma.workout.findMany({
     where: { userId: session.user.id },
-    orderBy: { date: "desc" },
+    orderBy: [{ date: "desc" }, { createdAt: "desc" }, { id: "desc" }],
     include: {
       exercises: {
         include: {
