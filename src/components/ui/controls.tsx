@@ -242,3 +242,64 @@ export function Disclosure({
     </div>
   );
 }
+
+/* --------------------------------------------------------------- Toggle */
+
+export interface ToggleProps {
+  checked: boolean;
+  onChange: (checked: boolean) => void;
+  label: string;
+  desc?: string;
+  id?: string;
+  disabled?: boolean;
+  className?: string;
+}
+
+export function Toggle({
+  checked,
+  onChange,
+  label,
+  desc,
+  id: idProp,
+  disabled = false,
+  className,
+}: ToggleProps) {
+  const autoId = React.useId();
+  const id = idProp ?? autoId;
+
+  return (
+    <label
+      htmlFor={id}
+      className={cn(
+        "flex cursor-pointer items-center justify-between gap-4 py-3.5 transition-opacity",
+        disabled && "cursor-not-allowed opacity-50",
+        className
+      )}
+    >
+      <span className="min-w-0 flex-1">
+        <span className="block text-[14px] font-semibold text-ink">{label}</span>
+        {desc && <span className="block text-[12.5px] text-ink-muted">{desc}</span>}
+      </span>
+      <button
+        id={id}
+        type="button"
+        role="switch"
+        aria-checked={checked}
+        aria-label={label}
+        disabled={disabled}
+        onClick={() => onChange(!checked)}
+        className={cn(
+          "relative h-7 w-12 shrink-0 rounded-full transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary",
+          checked ? "bg-primary" : "bg-hairline"
+        )}
+      >
+        <span
+          className={cn(
+            "absolute top-1 h-5 w-5 rounded-full bg-white shadow-soft transition-transform duration-200",
+            checked ? "translate-x-6" : "translate-x-1"
+          )}
+        />
+      </button>
+    </label>
+  );
+}

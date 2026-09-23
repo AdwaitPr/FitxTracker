@@ -1,6 +1,7 @@
 import type { MuscleGlyphName } from "@/components/ui/muscle-glyph";
 import type { TagTone } from "@/components/ui/tag";
 import { normalizeMuscleGroup } from "@/components/dashboard/workout-cover";
+export { normalizeMuscleGroup };
 
 export const CANONICAL_MUSCLE_GROUPS: MuscleGlyphName[] = [
   "Chest",

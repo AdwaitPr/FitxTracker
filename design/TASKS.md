@@ -75,8 +75,8 @@ Prototype paths are relative to `design/prototype/src/`. Real routes are in PORT
 - [x] 9.2 Body-weight chart from BodyWeightLog; log-weight modal per DECISIONS 1.
 
 ## Group 10: Exercises + Profile (files: pages/Account.tsx)  routes /exercises, /profile
-- [ ] 10.1 Exercises grid with filters, no favourites, no custom-exercise button.
-- [ ] 10.2 Profile form on existing GET/PUT /api/profile; remove settings toggles, password,
+- [x] 10.1 Exercises grid with filters, no favourites, no custom-exercise button.
+- [x] 10.2 Profile form on existing GET/PUT /api/profile; remove settings toggles, password,
       delete-account, avatar change. Theme toggle stays.
 
 ## Group 11: CogniType (files: pages/Cognitype.tsx)  4 routes under /cognitype
