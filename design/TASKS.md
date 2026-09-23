@@ -67,8 +67,8 @@ Prototype paths are relative to `design/prototype/src/`. Real routes are in PORT
 - [x] 7.3 Delete flow wired to existing DELETE with type-DELETE confirmation. No Edit button.
 
 ## Group 8: Recovery (files: pages/Recovery.tsx)  route /recovery
-- [ ] 8.1 Gauge + bands from alerts.ts. Form maps to existing POST /api/recovery.
-- [ ] 8.2 14-day history and sleep-vs-stress chart. Static "how it is calculated" popover.
+- [x] 8.1 Gauge + bands from alerts.ts. Form maps to existing POST /api/recovery.
+- [x] 8.2 14-day history and sleep-vs-stress chart. Static "how it is calculated" popover.
 
 ## Group 9: Progress (files: pages/Progress.tsx)  route /progress
 - [ ] 9.1 Modules from progress.ts data; range selector; skeleton/Suspense loading.
