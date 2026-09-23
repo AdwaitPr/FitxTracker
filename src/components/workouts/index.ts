@@ -6,3 +6,5 @@ export * from "./library-modal";
 export * from "./sticky-action-bar";
 export * from "./saved-summary-modal";
 export * from "./workout-logger-client";
+export * from "./workout-history-client";
+export * from "./workout-detail-client";

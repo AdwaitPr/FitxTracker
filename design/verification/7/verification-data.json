@@ -1,0 +1,33 @@
+{
+  "date": "2026-09-23T07:50:33.369Z",
+  "viewportsTested": [
+    "360x800",
+    "768x1024",
+    "1280x800",
+    "1600x900"
+  ],
+  "themesTested": [
+    "dark",
+    "light"
+  ],
+  "history": {
+    "title": "Workout History — FitxTracker",
+    "heading": "History",
+    "workoutsCount": 3,
+    "filteredCount": 3
+  },
+  "detail": {
+    "title": "Chest & Triceps Power — FitxTracker",
+    "name": "Chest & Triceps Power",
+    "exercisesCount": 1,
+    "sessionFacts": [
+      "Started : 08:52",
+      "Finished : 09:47",
+      "Recovery that day : 86 · Good"
+    ],
+    "modalTested": true,
+    "deleteBtnEnabledOnConfirm": false
+  },
+  "consoleLogsCount": 9,
+  "consoleErrors": []
+}

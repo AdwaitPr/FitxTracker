@@ -62,9 +62,9 @@ Prototype paths are relative to `design/prototype/src/`. Real routes are in PORT
 - Verify: save a workout end to end and confirm it appears in history with all set fields.
 
 ## Group 7: History + detail (files: pages/History.tsx)  routes /workouts/history, /workouts/[id]
-- [ ] 7.1 Filters via searchParams, week grouping, top set + volume derived.
-- [ ] 7.2 Detail: KPIs, accordion set tables, session facts (only rows with real data).
-- [ ] 7.3 Delete flow wired to existing DELETE with type-DELETE confirmation. No Edit button.
+- [x] 7.1 Filters via searchParams, week grouping, top set + volume derived.
+- [x] 7.2 Detail: KPIs, accordion set tables, session facts (only rows with real data).
+- [x] 7.3 Delete flow wired to existing DELETE with type-DELETE confirmation. No Edit button.
 
 ## Group 8: Recovery (files: pages/Recovery.tsx)  route /recovery
 - [ ] 8.1 Gauge + bands from alerts.ts. Form maps to existing POST /api/recovery.
