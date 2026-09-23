@@ -107,7 +107,7 @@ function WorkoutLoggerInner({
 
   // 2. Save active draft to sessionStorage (debounced)
   useEffect(() => {
-    if (savedSummaryOpen) return; // Do not save if just finished
+    if (savedSummaryOpen) return; // Do not save if modal is open
     const timer = setTimeout(() => {
       try {
         if (entries.length > 0 || name.trim() !== "" || notes.trim() !== "") {
@@ -122,6 +122,8 @@ function WorkoutLoggerInner({
               startedAt,
             })
           );
+        } else {
+          sessionStorage.removeItem(DRAFT_STORAGE_KEY);
         }
       } catch {
         // Ignore quota/sessionStorage errors
@@ -326,10 +328,19 @@ function WorkoutLoggerInner({
         notes: notes.trim(),
       });
 
-      // Clear draft
+      // Clear draft immediately from storage and reset form
       try {
         sessionStorage.removeItem(DRAFT_STORAGE_KEY);
       } catch {}
+
+      setName("");
+      setNotes("");
+      setDuration(60);
+      setEntries([]);
+      setStartedAt(null);
+      setElapsed(0);
+      setRestTimer(null);
+      setErrors({});
 
       setSavedSummaryOpen(true);
     } catch (err: unknown) {

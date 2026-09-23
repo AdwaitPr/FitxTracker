@@ -83,7 +83,7 @@ export function MuscleGlyph({
       className={cn("shrink-0", className)}
       aria-hidden={ariaHidden}
     >
-      {GLYPHS[name]}
+      {GLYPHS[name] ?? GLYPHS.Chest}
     </svg>
   );
 }

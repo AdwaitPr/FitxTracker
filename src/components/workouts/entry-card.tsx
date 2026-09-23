@@ -363,6 +363,7 @@ export function EntryCard({
                   <CompleteButton
                     done={s.done}
                     pop={s.justDone}
+                    disabled={!s.done && (typeof s.reps !== "number" || s.reps <= 0)}
                     label={`Mark set ${i + 1} ${s.done ? "incomplete" : "complete"}`}
                     onToggle={() => {
                       const nextDone = !s.done;

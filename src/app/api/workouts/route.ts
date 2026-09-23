@@ -69,7 +69,7 @@ export async function POST(request: NextRequest) {
                                         reps: set.reps,
                                         weight: set.weight,
                                         restTime: set.restTime || null,
-                                        completed: typeof set.completed === "boolean" ? set.completed : true,
+                                        completed: typeof set.completed === "boolean" ? set.completed : false,
                                         variationType: set.variationType || null,
                                         tempo: set.tempo || null,
                                         addedWeight: set.addedWeight || null,
