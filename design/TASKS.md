@@ -80,9 +80,9 @@ Prototype paths are relative to `design/prototype/src/`. Real routes are in PORT
       delete-account, avatar change. Theme toggle stays.
 
 ## Group 11: CogniType (files: pages/Cognitype.tsx)  4 routes under /cognitype
-- [ ] 11.1 Setup card + typing canvas: visual only, capture logic untouched.
-- [ ] 11.2 Results with FocusBreakdown real fields; sparkline from KeystrokeEvent.
-- [ ] 11.3 Sessions list + detail; analytics charts from real sessions.
+- [x] 11.1 Setup card + typing canvas: visual only, capture logic untouched.
+- [x] 11.2 Results with FocusBreakdown real fields; sparkline from KeystrokeEvent.
+- [x] 11.3 Sessions list + detail; analytics charts from real sessions.
 
 ## Group 12: Auth + Landing (files: pages/Marketing.tsx)  routes /, /login, /register
 - [ ] 12.1 Login and 2-step register on the EXISTING NextAuth + /api/register flows. No demo button.
