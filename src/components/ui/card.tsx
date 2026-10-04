@@ -25,7 +25,7 @@ const Card = forwardRef<HTMLElement, CardProps>(
         className={cn(
           "rounded-card bg-surface shadow-soft border border-hairline p-6 transition-colors duration-200",
           hover && "cursor-pointer hover:border-primary/40",
-          glow && "glow-purple",
+          glow && "shadow-lift",
           className
         )}
         {...props}

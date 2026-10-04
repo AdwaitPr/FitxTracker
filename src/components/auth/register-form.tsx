@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { AuthShell } from "@/components/auth/auth-shell";
@@ -12,7 +11,6 @@ import { Button } from "@/components/ui/button";
 import { User, Mail, Lock, Check, ArrowLeft, AlertCircle } from "lucide-react";
 
 export function RegisterForm() {
-  const router = useRouter();
   const [step, setStep] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");

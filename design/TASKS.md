@@ -89,7 +89,7 @@ Prototype paths are relative to `design/prototype/src/`. Real routes are in PORT
 - [x] 12.2 Landing per DECISIONS 8 (no unverifiable numbers, anonymised testimonials).
 
 ## Group 13: Cleanup
-- [ ] 13.1 Delete deprecated aliases and unused utilities (.gradient-text, .glass, .glow-purple,
+- [x] 13.1 Delete deprecated aliases and unused utilities (.gradient-text, .glass, .glow-purple,
       pulse-glow) after confirming zero references.
-- [ ] 13.2 Full pass: lint, tsc, build; every route at 360/768/1280/1600 in light + dark;
+- [x] 13.2 Full pass: lint, tsc, build; every route at 360/768/1280/1600 in light + dark;
       keyboard-only pass; write `design/verification/final/walkthrough.md`.
