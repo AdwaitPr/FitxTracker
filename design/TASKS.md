@@ -85,8 +85,8 @@ Prototype paths are relative to `design/prototype/src/`. Real routes are in PORT
 - [x] 11.3 Sessions list + detail; analytics charts from real sessions.
 
 ## Group 12: Auth + Landing (files: pages/Marketing.tsx)  routes /, /login, /register
-- [ ] 12.1 Login and 2-step register on the EXISTING NextAuth + /api/register flows. No demo button.
-- [ ] 12.2 Landing per DECISIONS 8 (no unverifiable numbers, anonymised testimonials).
+- [x] 12.1 Login and 2-step register on the EXISTING NextAuth + /api/register flows. No demo button.
+- [x] 12.2 Landing per DECISIONS 8 (no unverifiable numbers, anonymised testimonials).
 
 ## Group 13: Cleanup
 - [ ] 13.1 Delete deprecated aliases and unused utilities (.gradient-text, .glass, .glow-purple,
