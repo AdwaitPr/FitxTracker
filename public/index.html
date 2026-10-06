@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FitxTracker</title>
+  <style>
+    body {
+      margin: 0;
+      background: #0e0e16;
+      color: #f3f3f8;
+      font-family: system-ui, -apple-system, sans-serif;
+      display: grid;
+      place-items: center;
+      height: 100vh;
+      text-align: center;
+    }
+    .spinner {
+      width: 40px;
+      height: 40px;
+      border: 3px solid rgba(133, 119, 240, 0.2);
+      border-top-color: #8577f0;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto 16px;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <div>
+    <div class="spinner"></div>
+    <p>Connecting to FitxTracker...</p>
+  </div>
+</body>
+</html>
